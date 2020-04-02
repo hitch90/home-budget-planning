@@ -9,10 +9,10 @@ async function bootstrap() {
     allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
   });
   const options = new DocumentBuilder()
-      .setTitle('Cats example')
-      .setDescription('The cats API description')
-      .setVersion('1.0')
-      .addTag('cats')
+      .setTitle('Home budget planning API')
+      .setDescription('...')
+      .setVersion('0.1')
+      .addTag('budget')
       .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
