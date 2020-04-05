@@ -1,4 +1,15 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+  Put,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './create-category.dto';
 import { Category } from './category.entity';
@@ -18,8 +29,8 @@ export class CategoriesController {
 
   @UseGuards(AuthGuard('jwt'))
   @Get('categories')
-  findAll(): Promise<Category[]> {
-    return this.categoryService.findAll();
+  async findAll(@Query() query): Promise<Category[]> {
+    return await this.categoryService.findByFilters(query);
   }
 
   @UseGuards(AuthGuard('jwt'))
@@ -31,7 +42,10 @@ export class CategoriesController {
   @UseGuards(AuthGuard('jwt'))
   @Put('category/:id')
   @HttpCode(204)
-  update(@Param() params, @Body() updateCategoryDto: CreateCategoryDto): Promise<UpdateResult> {
+  update(
+    @Param() params,
+    @Body() updateCategoryDto: CreateCategoryDto,
+  ): Promise<UpdateResult> {
     return this.categoryService.update(params.id, updateCategoryDto);
   }
 

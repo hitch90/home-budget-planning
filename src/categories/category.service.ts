@@ -15,7 +15,13 @@ export class CategoryService {
   ) {}
 
   async findAll(): Promise<any> {
-    return await this.categoryRepository.find({ relations: ['parent', 'expenses'] });
+    return await this.categoryRepository.find({
+      relations: ['parent', 'expenses']
+    });
+  }
+
+  async findParentCategory(): Promise<Category[]> {
+    return await this.categoryRepository.find({ where: { parent: null } });
   }
 
   findOne(id: number): Promise<Category> {
@@ -34,4 +40,31 @@ export class CategoryService {
     return this.categoryRepository.delete({ id });
   }
 
+  findByFilters(query) {
+    const where: any = {};
+    let order = {};
+
+    if (query.type) {
+      where.type = query.type;
+    }
+
+    if (query.parent) {
+      where.parent = query.parent;
+      if (query.parent === 'null') {
+        where.parent = null;
+      }
+    }
+
+    if (query.order) {
+      order = {
+        [query.order]: query.direction || 'DESC',
+      };
+    }
+
+    return this.categoryRepository.find({
+      where,
+      order,
+      relations: ['parent', 'expenses', 'incomes'],
+    });
+  }
 }
