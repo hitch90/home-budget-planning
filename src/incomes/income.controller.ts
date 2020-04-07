@@ -82,7 +82,7 @@ export class IncomeController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Get('api/incomes/ months')
+  @Get('api/incomes/months')
   monthExpenses(): Promise<number[]> {
     return this.incomeService.incomesInMonths();
   }
