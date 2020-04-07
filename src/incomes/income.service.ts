@@ -138,7 +138,6 @@ export class IncomeService {
       };
     }
 
-    console.log(where);
     const list = await this.incomeRepository.find({
       where,
       order,
