@@ -21,26 +21,31 @@ export class CategoriesController {
   constructor(private categoryService: CategoryService) {}
 
   @UseGuards(AuthGuard('jwt'))
-  @Post('category')
-  @HttpCode(204)
+  @Post('api/category')
   async create(@Body() createCategoryDto: CreateCategoryDto): Promise<null> {
     return this.categoryService.create(createCategoryDto);
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Get('categories')
+  @Get('api/categories')
   async findAll(@Query() query): Promise<Category[]> {
     return await this.categoryService.findByFilters(query);
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Get('category/:id')
+  @Get('api/categories/sum')
+  async findParentCategoryWithExpenses(@Query() query): Promise<any> {
+    return await this.categoryService.findParentCategoryWithExpenses();
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('api/category/:id')
   findOne(@Param() params): Promise<Category> {
     return this.categoryService.findOne(params.id);
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Put('category/:id')
+  @Put('api/category/:id')
   @HttpCode(204)
   update(
     @Param() params,
@@ -50,7 +55,7 @@ export class CategoriesController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Delete('category/:id')
+  @Delete('api/category/:id')
   @HttpCode(204)
   delete(@Param() params): Promise<DeleteResult> {
     return this.categoryService.delete(params.id);

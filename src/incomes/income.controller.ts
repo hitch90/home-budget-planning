@@ -22,14 +22,14 @@ export class IncomeController {
   constructor(private incomeService: IncomeService) {}
 
   @UseGuards(AuthGuard('jwt'))
-  @Post('income')
+  @Post('api/income')
   @HttpCode(204)
   async create(@Body() createIncomeDto: CreateIncomeDto): Promise<null> {
     return this.incomeService.create(createIncomeDto);
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Get('incomes')
+  @Get('api/incomes')
   findAll(@Query() query): Promise<Income[]> {
     const { filters, limit, month, account, category } = query;
     if (limit) {
@@ -53,13 +53,13 @@ export class IncomeController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Get('income/:id')
+  @Get('api/income/:id')
   findOne(@Param() params): Promise<Income> {
     return this.incomeService.findOne(params.id);
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Put('income/:id')
+  @Put('api/income/:id')
   @HttpCode(204)
   update(
     @Param() params,
@@ -69,7 +69,7 @@ export class IncomeController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Delete('income/:id')
+  @Delete('api/income/:id')
   @HttpCode(204)
   delete(@Param() params): Promise<DeleteResult> {
     return this.incomeService.delete(params.id);
@@ -82,7 +82,7 @@ export class IncomeController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Get('api/incomes/months')
+  @Get('api/incomes/ months')
   monthExpenses(): Promise<number[]> {
     return this.incomeService.incomesInMonths();
   }

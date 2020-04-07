@@ -20,7 +20,9 @@ export class Expense {
   @Column()
   description: string;
 
-  @Column()
+  @Column({
+    default: '',
+  })
   color: string;
 
   @Column()
