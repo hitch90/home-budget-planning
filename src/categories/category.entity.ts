@@ -27,6 +27,9 @@ export class Category {
   @Column()
   color: string;
 
+  @Column()
+  type: string;
+
   @ManyToOne(
     type => Category,
     category => category.children,
