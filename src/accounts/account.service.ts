@@ -1,6 +1,6 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import {Not, Repository} from 'typeorm';
 import { Account } from './account.entity';
 import { ExpenseService } from '../expenses/expense.service';
 import { IncomeService } from '../incomes/income.service';
@@ -80,7 +80,7 @@ export class AccountService {
   }
 
   async getBalance() {
-    const accounts = await this.findAll();
+    const accounts = await this.findAll({ type: Not('credit') });
     let balance = 0;
     for (const item of accounts) {
       balance = balance + item.currentValue;
